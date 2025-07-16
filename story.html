@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alumni Success Stories</title>
+</head>
+<body>
+    <style>
+        body {
+      font-family: sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 20px 30px 40px;
+    }
+
+    .stories {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .story {
+      background: #e3f2fd;
+      border-left: 6px solid #2196f3;
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .story .name {
+      font-weight: 700;
+      font-size: 1.1em;
+      color: #0d47a1;
+    }
+
+    .story .year {
+      font-size: 0.9em;
+      color: #555;
+      margin-left: 10px;
+    }
+
+    .story .text {
+      margin-top: 8px;
+      font-size: 1em;
+      line-height: 1.4;
+      color: #222;
+    }
+
+    form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #444;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 5px;
+      border: 1px solid #bbb;
+      font-size: 1em;
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    button {
+      background: #2196f3;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    button:hover {
+      background: #0d47a1;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 20px 30px;
+      }
+    }
+
+    </style>
+
+  <div class="container">
+    <h1>Alumni Success Stories</h1>
+
+    <div id="stories" class="stories">
+    </div>
+
+    <form id="storyForm">
+      <label for="name">Alumni Name</label>
+      <input type="text" id="name" placeholder="e.g. Prashanti...." required />
+
+      <label for="year">Graduation Year</label>
+      <input type="text" id="year" placeholder="e.g. 2015" required pattern="\d{4}" title="Please enter a valid 4-digit year" />
+
+      <label for="story">Success Story</label>
+      <textarea id="story" placeholder="Share your success story..." required></textarea>
+
+      <button type="submit">Share Story</button>
+    </form>
+  </div>
+
+  <script>
+     const storiesData = [
+      {
+        name: 'Usha pativada',
+        year: 2010,
+        text: 'Started my own startup that now employs over 50 people worldwide!'
+      },
+      {
+        name: 'Varshini neralla',
+        year: 2016,
+        text: 'Became a teamleader at my office'
+      },
+       {
+        name: 'prahsanti moyyi',
+        year: 2016,
+        text: 'I have got a promotion as manager'
+      }
+    ];
+
+    const storiesContainer = document.getElementById('stories');
+    const storyForm = document.getElementById('storyForm');
+
+    function renderStories() {
+      storiesContainer.innerHTML = '';
+      storiesData.forEach(({ name, year, text }) => {
+        const storyEl = document.createElement('div');
+        storyEl.classList.add('story');
+        storyEl.innerHTML = `
+          <div><span class="name">${name}</span><span class="year">(${year})</span></div>
+          <div class="text">${text}</div>
+        `;
+        storiesContainer.appendChild(storyEl);
+      });
+    }
+
+    storyForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const name = storyForm.name.value.trim();
+      const year = storyForm.year.value.trim();
+      const text = storyForm.story.value.trim();
+
+      if (!name || !year || !text) {
+        alert('Please fill out all fields.');
+        return;
+      }
+      if (!/^\d{4}$/.test(year)) {
+        alert('Please enter a valid 4-digit year.');
+        return;
+      }
+
+      storiesData.push({ name, year, text });
+      renderStories();
+
+      storyForm.reset();
+    });
+  </script>
+ 
+</body>
+</html>
